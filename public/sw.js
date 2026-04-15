@@ -1,5 +1,12 @@
-const CACHE_NAME = "darjibook-v2";
+const CACHE_NAME = "darjibook-v3";
 const OFFLINE_URLS = ["/"];
+const NEVER_CACHE_PATHS = new Set([
+  "/manifest.json",
+  "/sw.js",
+  "/icon-192.png",
+  "/icon-512.png",
+  "/favicon.png",
+]);
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
@@ -26,6 +33,20 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener("fetch", (event) => {
+  if (event.request.method !== "GET") return;
+
+  const requestUrl = new URL(event.request.url);
+
+  // Always fetch latest app identity resources so Android updates icon/manifest.
+  if (NEVER_CACHE_PATHS.has(requestUrl.pathname)) {
+    event.respondWith(
+      fetch(event.request, { cache: "no-store" }).catch(() =>
+        caches.match(event.request),
+      ),
+    );
+    return;
+  }
+
   // Network-first strategy for navigation, cache-first for assets
   if (event.request.mode === "navigate") {
     event.respondWith(
