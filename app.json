@@ -12,6 +12,7 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.masterstitch.darjiapp",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
@@ -23,7 +24,18 @@
     },
     "web": {
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "bundler": "metro",
+      "favicon": "./assets/images/favicon.png",
+      "name": "Darji Book Pro",
+      "shortName": "DarjiBook",
+      "description": "Premium Tailoring Management App - Manage clients, orders, measurements & payments",
+      "themeColor": "#065f46",
+      "backgroundColor": "#f1f5f9",
+      "splash": {
+        "image": "./assets/images/splash-icon.png",
+        "resizeMode": "contain",
+        "backgroundColor": "#065f46"
+      }
     },
     "plugins": [
       "expo-router",
@@ -43,6 +55,12 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "108b2a7f-3849-4997-8935-7003ca12c6d7"
+      }
     }
   }
 }
